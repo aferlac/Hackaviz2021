@@ -17,13 +17,13 @@ from PIL import Image
 # In[2]:
 
 
-dffoncqp = pd.read_csv('.\foncier_qp.txt', sep=',')
+dffoncqp = pd.read_csv('./foncier_qp.txt', sep=',')
 dffoncqp.drop('nombre_lot', axis=1, inplace=True)
 dffoncqp['prix_m_carre']=dffoncqp['valeur_fonciere']/dffoncqp['surface_reelle_bati']
-df_geocommune=pd.read_csv('.\geocommune.csv')
+df_geocommune=pd.read_csv('./geocommune.csv')
 for i in range(len(df_geocommune)):
     df_geocommune['geo'][i]=eval(df_geocommune['geo'][i])
-df_geoqp = pd.read_csv('.\geoqp.csv')
+df_geoqp = pd.read_csv('./geoqp.csv')
 for i in range(len(df_geoqp)):
     df_geoqp['geo'][i]=eval(df_geoqp['geo'][i])
 
@@ -31,7 +31,7 @@ for i in range(len(df_geoqp)):
 # In[3]:
 
 
-dfmutuniq = pd.read_csv('.\foncier_qp_mutation_unique.csv')
+dfmutuniq = pd.read_csv('./foncier_qp_mutation_unique.csv')
 
 ##########################################################################################################
 #  Construction de foncier_qp_mutation_unique.csv                                                        #
@@ -48,7 +48,7 @@ dfmutuniq = pd.read_csv('.\foncier_qp_mutation_unique.csv')
 #                                                                                                        #
 ##########################################################################################################
 
-image = Image.open('.\Toulouse_Rue_des_Mouettes_20110414.jpg')
+image = Image.open('./Toulouse_Rue_des_Mouettes_20110414.jpg')
 
 
 # In[4]:
