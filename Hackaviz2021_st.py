@@ -13,24 +13,24 @@ import folium
 from streamlit_folium import folium_static
 
 
-# In[52]:
+# In[2]:
 
 
-dffoncqp = pd.read_csv('foncier_qp.txt', sep=',')
+dffoncqp = pd.read_csv('./foncier_qp.txt', sep=',')
 dffoncqp.drop('nombre_lot', axis=1, inplace=True)
 dffoncqp['prix_m_carre']=dffoncqp['valeur_fonciere']/dffoncqp['surface_reelle_bati']
-df_geocommune = pd.read_csv('geocommune.csv')
+df_geocommune=pd.read_csv('./geocommune.csv')
 for i in range(len(df_geocommune)):
     df_geocommune['geo'][i]=eval(df_geocommune['geo'][i])
-df_geoqp = pd.read_csv('geoqp.csv')
+df_geoqp = pd.read_csv('./geoqp.csv')
 for i in range(len(df_geoqp)):
     df_geoqp['geo'][i]=eval(df_geoqp['geo'][i])
 
 
-# In[69]:
+# In[ ]:
 
 
-dfmutuniq = pd.read_csv('foncier_qp_mutation_unique.csv')
+dfmutuniq = pd.read_csv('./foncier_qp_mutation_unique.csv')
 
 ##########################################################################################################
 #  Construction de foncier_qp_mutation_unique.csv                                                        #
@@ -48,7 +48,7 @@ dfmutuniq = pd.read_csv('foncier_qp_mutation_unique.csv')
 ##########################################################################################################
 
 
-# In[4]:
+# In[ ]:
 
 
 from PIL import Image
@@ -56,7 +56,7 @@ image = Image.open('Toulouse_Rue_des_Mouettes_20110414.jpg')
 ##st.image(image, caption='Sunrise by the mountains')
 
 
-# In[5]:
+# In[ ]:
 
 
 # Titre de la page Streamlit
@@ -64,7 +64,7 @@ st.set_page_config(page_title=' Toulouse-Hackaviz2021 - A.Ferlac ', page_icon=im
 st.title(" Transactions Immobilières des quartiers prioritaires d'Occitanie - Toulouse Hackaviz 2021")
 
 
-# In[76]:
+# In[ ]:
 
 
 st.write('---') 
