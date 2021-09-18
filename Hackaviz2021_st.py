@@ -11,26 +11,27 @@ import seaborn as sns
 import streamlit as st
 import folium
 from streamlit_folium import folium_static
+from PIL import Image
 
 
 # In[2]:
 
 
-dffoncqp = pd.read_csv('./foncier_qp.txt', sep=',')
+dffoncqp = pd.read_csv('.\foncier_qp.txt', sep=',')
 dffoncqp.drop('nombre_lot', axis=1, inplace=True)
 dffoncqp['prix_m_carre']=dffoncqp['valeur_fonciere']/dffoncqp['surface_reelle_bati']
-df_geocommune=pd.read_csv('./geocommune.csv')
+df_geocommune=pd.read_csv('.\geocommune.csv')
 for i in range(len(df_geocommune)):
     df_geocommune['geo'][i]=eval(df_geocommune['geo'][i])
-df_geoqp = pd.read_csv('./geoqp.csv')
+df_geoqp = pd.read_csv('.\geoqp.csv')
 for i in range(len(df_geoqp)):
     df_geoqp['geo'][i]=eval(df_geoqp['geo'][i])
 
 
-# In[ ]:
+# In[3]:
 
 
-dfmutuniq = pd.read_csv('./foncier_qp_mutation_unique.csv')
+dfmutuniq = pd.read_csv('.\foncier_qp_mutation_unique.csv')
 
 ##########################################################################################################
 #  Construction de foncier_qp_mutation_unique.csv                                                        #
@@ -47,16 +48,10 @@ dfmutuniq = pd.read_csv('./foncier_qp_mutation_unique.csv')
 #                                                                                                        #
 ##########################################################################################################
 
-
-# In[ ]:
-
-
-from PIL import Image
-image = Image.open('Toulouse_Rue_des_Mouettes_20110414.jpg')
-##st.image(image, caption='Sunrise by the mountains')
+image = Image.open('.\Toulouse_Rue_des_Mouettes_20110414.jpg')
 
 
-# In[ ]:
+# In[4]:
 
 
 # Titre de la page Streamlit
@@ -64,25 +59,25 @@ st.set_page_config(page_title=' Toulouse-Hackaviz2021 - A.Ferlac ', page_icon=im
 st.title(" Transactions Immobilières des quartiers prioritaires d'Occitanie - Toulouse Hackaviz 2021")
 
 
-# In[ ]:
+# In[6]:
 
 
 st.write('---') 
 
 ### Page 1
 
-col1, col2, col3, = st.columns([1,2,.6]) # Séparation de la page en 3 colonnes
-col1.image(Image.open("Toulouse_Rue_des_Mouettes_20110414.jpg"), use_column_width=True, caption='Toulouse_Rue_des_Mouettes')
-col2.header("Introduction")
-col2.write("La région Occitanie possède **105 quartiers prioritaires** répartis dans **47 communes** des 12 départements de la région.") 
-col2.write("Entre 2016 et 2020, dans ces quartiers prioritaires **28825 transactions immobilières** ont été enregistrées. Ces 28825 transactions ont été traitées par **20418 mutations**. La différence entre les nombres de mutations et de transactions s'explique car près de 18 % de ces mutations concernent plusieurs biens immobiliers. Pour exemple : Les 3 mutations comportant le plus de transactions traitent 40, 44 et 166 biens sur les communes respectivement de Pamiers, Toulouse et Grande Combe + Alès")
-col2.write('Les données fournies ne concernent que les transactions des maisons, appartements et locaux industriels, commerciaux ou assimilés. Dans la suite de la présentation les locaux industriels, commerciaux ou assimilés seront appelés "autres".')
-col3.subheader("Nombre de biens par mutation")
+col1, col2 = st.columns([2,1]) # Séparation de la page en 3 colonnes
+col1.header("Introduction")
+col1.write("La région Occitanie possède **105 quartiers prioritaires** répartis dans **47 communes** des 12 départements de la région.") 
+col1.write("Entre 2016 et 2020, dans ces quartiers prioritaires **28825 transactions immobilières** ont été enregistrées. Ces 28825 transactions ont été traitées par **20418 mutations**. La différence entre les nombres de mutations et de transactions s'explique car près de 18 % de ces mutations concernent plusieurs biens immobiliers. Pour exemple : Les 3 mutations comportant le plus de transactions traitent 40, 44 et 166 biens sur les communes respectivement de Pamiers, Toulouse et Grande Combe + Alès")
+col1.write('Les données fournies ne concernent que les transactions des maisons, appartements et locaux industriels, commerciaux ou assimilés. Dans la suite de la présentation les locaux industriels, commerciaux ou assimilés seront appelés "autres".')
+col2.image(Image.open("Toulouse_Rue_des_Mouettes_20110414.jpg"), use_column_width=True, caption='Toulouse_Rue_des_Mouettes')
+col2.subheader("Nombre de biens par mutation")
 data = [82.46, 5.08, 3.75, 8.71]
 label= ["1 bien", "4 biens et plus", "3 biens", "2 biens"]
 fig, ax = plt.subplots()
 ax.pie(x=data, labels=label, autopct='%1.1f%%', startangle=0)
-col3.pyplot(fig)
+col2.pyplot(fig)
 st.write('---') 
 
 #col1, col2, col3 = st.columns(3) # Séparation de la page en 3 colonnes
@@ -251,7 +246,8 @@ elif choix=='Quartier':
                                                         (df_geoqp['nom_commune']==choix_commune)]['geo'],
                                          fill_color='blue').add_to(map)
         folium_static(map) # Affichage de la carte dans Streamlit
-
+st.write('---')
+st.header("Conclusion")
 st.write("**3/4 des mutations concernent des appartements. Le quart restant est partagé entre les maisons et les locaux commerciaux ou industriels.**")
 st.write("**Baisse des mutations entre 2019 et 2020 : Conséquence du COVID19 ?**")
 st.write('---') 
